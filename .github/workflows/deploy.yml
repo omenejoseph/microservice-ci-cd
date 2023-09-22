@@ -29,6 +29,7 @@ jobs:
     - name: Pull and Run containers
       env:
         VERSION: ${{ github.event.inputs.version }}
+        SERVER_IP: ${{ vars.SERVER_IP }}
       run: |
         ssh -i private_key root@$SERVER_IP  << EOF
         echo $CR_PAT | docker login ghcr.io -u USERNAME --password-stdin
