@@ -5,8 +5,10 @@ jobs:
   build-go-api:
     runs-on: ubuntu-latest
     steps:
-      # - run: ls
-      - run: bash ${{ github.workspace }}/build-and-push.sh node-api 1.0.0
+      - run: |
+         chmod +x ${{ github.workspace }}/build-and-push.sh
+         ${{ github.workspace }}/build-and-push.sh
+      # - run: bash ${{ github.workspace }}/build-and-push.sh node-api 1.0.0
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
       - name: Check out repository code
