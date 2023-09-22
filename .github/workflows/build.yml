@@ -16,9 +16,8 @@ jobs:
         env:
          USERNAME: ${{ vars.USERNAME }}
         run: |
+          echo "$USERNAME"
           ls ${{ github.workspace }}
-      - run: echo "$USERNAME"    
-      - run: |
-           chmod +x ./build-and-push.sh
-           ./build-and-push.sh go-api 1.0.0
+          chmod +x ./build-and-push.sh
+          ./build-and-push.sh go-api 1.0.0
       - run: echo "🍏 This job's status is ${{ job.status }}."
