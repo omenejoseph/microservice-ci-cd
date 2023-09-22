@@ -30,7 +30,7 @@ jobs:
       env:
         VERSION: ${{ github.event.inputs.version }}
       run: |
-        ssh -i private_key root@${SERVER_IP}  << EOF
+        ssh -i private_key root@$SERVER_IP  << EOF
         echo $CR_PAT | docker login ghcr.io -u USERNAME --password-stdin
         docker pull gcr.io/omenejoseph/go-api:$VERSION
         docker pull gcr.io/omenejoseph/node-api:$VERSION
