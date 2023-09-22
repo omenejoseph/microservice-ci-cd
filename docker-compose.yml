@@ -1,0 +1,34 @@
+version: "3.2"
+services: 
+  go-api:
+    build: 
+      context: ../go-api
+      target: dev
+    ports: 
+      - "8080:8080"
+    networks:
+      - backend
+
+  node-api:
+    build: 
+      context: ../node-api
+      target: dev
+    ports: 
+      - "3000:3080" 
+    networks:
+      - backend  
+
+  db:
+    image: "mysql:8.1.0" 
+    volumes:
+       - db-data:/var/lib/mysql/data
+    environment:
+      - MYSQL_ROOT_PASSWORD=root  
+    networks:
+      - backend
+
+volumes:
+  db-data:
+networks:
+  backend:
+
