@@ -15,6 +15,7 @@ jobs:
       - name: List files in the repository
         env:
          USERNAME: ${{ vars.USERNAME }}
+         CR_PAT: ${{ secrets.CR_PAT }}
         run: |
           echo "$USERNAME"
           ls ${{ github.workspace }}
