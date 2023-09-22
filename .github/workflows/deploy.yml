@@ -21,7 +21,7 @@ jobs:
         SERVER_IP: ${{ vars.SERVER_IP }}
       run: |
         echo "$PRIVATE_KEY" > private_key
-        chmod 600 private_key
+        chmod 400 private_key
         mkdir -p ~/.ssh
         touch ~/.ssh/known_hosts
         ssh-keyscan -H ${SERVER_IP} >> ~/.ssh/known_hosts
@@ -31,7 +31,7 @@ jobs:
         VERSION: ${{ github.event.inputs.version }}
         SERVER_IP: ${{ vars.SERVER_IP }}
       run: |
-        ssh -i private_key root@$SERVER_IP  << EOF
+        ssh -T -i private_key root@$SERVER_IP  << EOF
         echo $CR_PAT | docker login ghcr.io -u USERNAME --password-stdin
         docker pull gcr.io/omenejoseph/go-api:$VERSION
         docker pull gcr.io/omenejoseph/node-api:$VERSION
