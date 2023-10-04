@@ -43,5 +43,6 @@ jobs:
         echo Setting up Docker login.....
         echo $CR_PAT | docker login ghcr.io -u $USERNAME --password-stdin
         bash /tmp/create-docker-compose.sh $VERSION 
+        export USERNAME=$(echo $USERNAME)
         docker compose -f docker-compose-prod.yml up -d
         EOF
