@@ -36,6 +36,7 @@ jobs:
       run: |
         ssh -T -i private_key root@$SERVER_IP  << EOF
         echo Setting up Docker login.....
+        cat /home/omenejoseph/.env
         echo $USERNAME
         echo $CR_PAT
         echo $CR_PAT | docker login ghcr.io -u $USERNAME --password-stdin
