@@ -42,6 +42,6 @@ jobs:
         ssh -T -i private_key root@$SERVER_IP  << EOF
         echo Setting up Docker login.....
         echo $CR_PAT | docker login ghcr.io -u $USERNAME --password-stdin
-        bash /tmp/create-docker-compose.sh $VERSION 
-        USERNAME=$(echo $USERNAME) docker compose -f docker-compose-prod.yml up -d
+        USERNAME=$(echo $USERNAME) bash /tmp/create-docker-compose.sh $VERSION 
+        docker compose -f docker-compose-prod.yml up -d
         EOF
