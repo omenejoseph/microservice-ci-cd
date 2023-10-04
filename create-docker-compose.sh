@@ -22,7 +22,7 @@ services:
   node-api:
     image: ghcr.io/${USERNAME}/node-api:${VERSION}
     ports: 
-      - "3000:3080"
+      - "3000:3000"
     networks:
       - backend  
 
