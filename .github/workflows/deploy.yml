@@ -39,6 +39,6 @@ jobs:
         source /home/username/.env
         echo $CR_PAT | docker login ghcr.io -u $USERNAME --password-stdin
         docker image ls
-        # docker run -d -p 0.0.0.0:8080:8080 --name go-api gcr.io/omenejoseph/go-api:$VERSION
+        docker run -d -p 0.0.0.0:8080:8080 --name go-api ghcr.io/omenejoseph/node-api:1.0.0
         # docker run -d -p 0.0.0.0:3000:3000 --name node-api gcr.io/omenejoseph/node-api:$VERSION
         EOF
