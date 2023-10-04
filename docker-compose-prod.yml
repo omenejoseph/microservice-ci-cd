@@ -9,7 +9,7 @@ services:
       - web
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.go-api.rule=Host(`go-api.omenejoseph.co.uk`)"
+      - "traefik.http.routers.go-api.rule=Host()"
       - "traefik.http.routers.go-api.entrypoints=web"  
 
   node-api:
@@ -21,8 +21,8 @@ services:
       - web
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.node-api.rule=Host(`node-api.omenejoseph.co.uk`)"
-      - "traefik.http.routers.node-api.entrypoints=web"   
+      - "traefik.http.routers.node-api.rule=Host()"
+      - "traefik.http.routers.node-api.entrypoints=web"    
 
   db:
     image: "mysql:8.1.0" 
@@ -46,10 +46,11 @@ services:
       - --providers.docker.exposedbydefault=false
       - --entrypoints.web.address=:80
     networks:
-      - web     
-
+      - web  
+    
 volumes:
   db-data:
 networks:
   backend:
   web:
+

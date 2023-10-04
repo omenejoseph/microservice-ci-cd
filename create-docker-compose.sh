@@ -66,5 +66,5 @@ networks:
   backend:
   web:
 
-
+EOL
 echo "docker-compose.yml generated!"
