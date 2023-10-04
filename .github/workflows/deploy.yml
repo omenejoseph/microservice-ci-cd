@@ -17,8 +17,8 @@ jobs:
 
     - name: Setup SSH
       env:
-        CR_PAT_SECRET: ${{ secrets.CR_PAT }}
-        USERNAME_SECRET: ${{ vars.USERNAME }}
+        CR_PAT: ${{ secrets.CR_PAT }}
+        USERNAME: ${{ vars.USERNAME }}
         PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         SERVER_IP: ${{ vars.SERVER_IP }}
       run: |
@@ -36,8 +36,8 @@ jobs:
       run: |
         ssh -T -i private_key root@$SERVER_IP  << EOF
         echo Setting up Docker login...
-        export CR_PAT=$CR_PAT_SECRET
-        export USERNAME=$USERNAME_SECRET
+        echo $CR_PAT
+        echo $USERNAME
         echo $CR_PAT | docker login ghcr.io -u $USERNAME --password-stdin
         docker pull gcr.io/omenejoseph/go-api:$VERSION
         docker pull gcr.io/omenejoseph/node-api:$VERSION
