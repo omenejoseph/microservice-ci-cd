@@ -9,7 +9,8 @@ fi
 VERSION="$1"
 
 # Generate docker-compose.yml
-cat <<EOL > version: "3.2"
+cat <<EOL > docker-compose-prod.yml
+version: "3.2"
 services: 
   go-api:
     image: ghcr.io/${USERNAME}/go-api:${VERSION}
@@ -33,7 +34,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.node-api.rule=Host(`node-api.omenejoseph.co.uk`)"
-      - "traefik.http.routers.node-api.entrypoints=web"   
+      - "traefik.http.routers.node-api.entrypoints=web"    
 
   db:
     image: "mysql:8.1.0" 
@@ -57,13 +58,13 @@ services:
       - --providers.docker.exposedbydefault=false
       - --entrypoints.web.address=:80
     networks:
-      - web     
-
+      - web  
+    
 volumes:
   db-data:
 networks:
   backend:
   web:
-EOL
+
 
 echo "docker-compose.yml generated!"
