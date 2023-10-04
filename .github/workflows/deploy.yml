@@ -38,6 +38,7 @@ jobs:
         echo Setting up Docker login...
         echo $CR_PAT
         echo $USERNAME
+        echo I am here...
         echo $CR_PAT | docker login ghcr.io -u $USERNAME --password-stdin
         docker pull gcr.io/omenejoseph/go-api:$VERSION
         docker pull gcr.io/omenejoseph/node-api:$VERSION
