@@ -39,8 +39,8 @@ jobs:
         echo $USERNAME
         echo $CR_PAT
         echo $CR_PAT | docker login ghcr.io -u $USERNAME --password-stdin
-        CR_PAT=$(echo $CR_PAT) docker pull gcr.io/omenejoseph/go-api:$VERSION
-        CR_PAT=$(echo $CR_PAT) docker pull gcr.io/omenejoseph/node-api:$VERSION
+        docker pull gcr.io/omenejoseph/go-api:$VERSION
+        docker pull gcr.io/omenejoseph/node-api:$VERSION
         docker run -d -p 0.0.0.0:8080:8080 --name go-api gcr.io/omenejoseph/go-api:$VERSION
         docker run -d -p 0.0.0.0:3000:3000 --name node-api gcr.io/omenejoseph/node-api:$VERSION
         EOF
