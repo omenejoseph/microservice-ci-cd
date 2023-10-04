@@ -26,7 +26,13 @@ jobs:
         touch ~/.ssh/known_hosts
         ssh-keyscan -H ${SERVER_IP} >> ~/.ssh/known_hosts
 
-    - name: Pull and Run containers
+    - name: Copy script to server
+      env:
+        SERVER_IP: ${{ vars.SERVER_IP }}
+      run: |
+        scp -i private_key create-docker-compose.sh root@$SERVER_IP:/tmp/    
+
+    - name: Execute script and run containers
       env:
         VERSION: ${{ github.event.inputs.version }}
         SERVER_IP: ${{ vars.SERVER_IP }}
@@ -37,11 +43,6 @@ jobs:
         echo Setting up Docker login.....
         source /home/username/.env
         echo $CR_PAT | docker login ghcr.io -u $USERNAME --password-stdin
-        docker image ls
-        # Copy script to server
-        scp -o StrictHostKeyChecking=no -i private_key create-docker-compose.sh root@$SERVER_IP:/tmp/
-        # Execute script on server
-        ssh -o StrictHostKeyChecking=no -i private_key root@$SERVER_IP "bash /tmp/create-docker-compose.sh $VERSION"
-        # Cleanup
-        rm -f /tmp/private_key
+        bash /tmp/generate-compose.sh $VERSION 
+        docker compose up -d
         EOF
