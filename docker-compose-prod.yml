@@ -1,0 +1,29 @@
+version: "3.2"
+services: 
+  go-api:
+    image: ghcr.io/omenejoseph/go-api:1.0.0
+    ports: 
+      - "8080:8080"
+    networks:
+      - backend
+
+  node-api:
+    image: ghcr.io/omenejoseph/node-api:1.0.0
+    ports: 
+      - "3000:3080"
+    networks:
+      - backend  
+      
+  db:
+    image: "mysql:8.1.0" 
+    volumes:
+       - db-data:/var/lib/mysql/data
+    environment:
+      - MYSQL_ROOT_PASSWORD=root  
+    networks:
+      - backend
+
+volumes:
+  db-data:
+networks:
+  backend:

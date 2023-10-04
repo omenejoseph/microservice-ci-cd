@@ -17,21 +17,28 @@ jobs:
 
     - name: Setup SSH
       env:
-        PRIVATE_KEY: ${{ secrets.SSH_SECRET_KEY }}
+        PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         SERVER_IP: ${{ vars.SERVER_IP }}
       run: |
         echo "$PRIVATE_KEY" > private_key
-        chmod 600 private_key
-        ssh-keyscan -H your-server-ip >> ~/.ssh/known_hosts
+        chmod 400 private_key
+        mkdir -p ~/.ssh
+        touch ~/.ssh/known_hosts
+        ssh-keyscan -H ${SERVER_IP} >> ~/.ssh/known_hosts
+        cat ~/.ssh/known_hosts
 
     - name: Pull and Run containers
       env:
         VERSION: ${{ github.event.inputs.version }}
+        SERVER_IP: ${{ vars.SERVER_IP }}
       run: |
-        ssh -i private_key user@your-server-ip << EOF
-        echo $CR_PAT | docker login ghcr.io -u USERNAME --password-stdin
-        docker pull gcr.io/omenejoseph/go-api:$VERSION
+        ssh -T -i private_key root@$SERVER_IP  << EOF
+        echo Setting up Docker login...
+        echo $USERNAME 
+        echo
+        echo $CR_PAT | docker login ghcr.io -u $USERNAME --password-stdin
+        docker pull gcr.io/$USERNAME/go-api:$VERSION
         docker pull gcr.io/omenejoseph/node-api:$VERSION
-        docker run -d -p 0.0.0.0:8080:8080 --name go-api gcr.io/omenejoseph/go-api:$VERSION
-        docker run -d -p 0.0.0.0:3000:3000 --name node-api gcr.io/omenejoseph/node-api:$VERSION
+        docker run -d -p 0.0.0.0:8080:8080 --name go-api gcr.io/$USERNAME/go-api:$VERSION
+        docker run -d -p 0.0.0.0:3000:3000 --name node-api gcr.io/$USERNAME/node-api:$VERSION
         EOF
