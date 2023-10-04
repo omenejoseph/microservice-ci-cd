@@ -35,10 +35,8 @@ jobs:
         SERVER_IP: ${{ vars.SERVER_IP }}
       run: |
         ssh -T -i private_key root@$SERVER_IP  << EOF
-        echo Setting up Docker login...
-        echo $CR_PAT
-        echo $USERNAME
-        echo I am here...
+        echo Setting up Docker login.....
+        source /home/omenejoseph/.env
         echo $CR_PAT | docker login ghcr.io -u $USERNAME --password-stdin
         docker pull gcr.io/omenejoseph/go-api:$VERSION
         docker pull gcr.io/omenejoseph/node-api:$VERSION
